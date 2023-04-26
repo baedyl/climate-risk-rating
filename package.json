@@ -9,17 +9,29 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-table": "^8.8.5",
     "@types/node": "18.16.0",
-    "@types/react": "18.0.38",
-    "@types/react-dom": "18.0.11",
+    "@types/react": "^18.0.38",
+    "@types/react-dom": "^18.0.11",
     "autoprefixer": "10.4.14",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.1",
+    "mapbox-gl": "^2.14.1",
     "next": "13.3.1",
     "postcss": "8.4.23",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-map-gl": "^7.0.23",
+    "react-native": "^0.71.7",
+    "react-native-web": "0.17.1",
+    "react-papaparse": "^4.1.0",
     "tailwindcss": "3.3.1",
     "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@expo/next-adapter": "^5.0.2",
+    "next-compose-plugins": "^2.2.1",
+    "next-fonts": "^1.5.1",
+    "next-transpile-modules": "^10.0.0"
   }
 }
