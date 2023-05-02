@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { usePapaParse } from 'react-papaparse';
 import { Loader } from './Loader';
 
-export default function ReadRemoteFile({ onUpdateDecades, onUpdateData }) {
+interface CSVReaderProps {
+    onUpdateDecades: any;
+    onUpdateData: any;
+}
+
+export default function ReadRemoteFile({ onUpdateDecades, onUpdateData }: CSVReaderProps) {
     const [isFetching, setIsFetching] = useState(false);
     const { readRemoteFile } = usePapaParse();
 
@@ -11,6 +16,7 @@ export default function ReadRemoteFile({ onUpdateDecades, onUpdateData }) {
         const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRkq-jFTkAYNwQBTFHu66FyQCb7RC4-oBV53swan7UXTGUODR0OOUJC7taoC1BpI02u_ZrfzNIAuqO_/pub?output=csv'
         readRemoteFile(url, {
             header: true,
+            download: true,
             transformHeader: (value: String) => {
                 return value.toLowerCase().replace(' ', '_')
             },
@@ -20,7 +26,7 @@ export default function ReadRemoteFile({ onUpdateDecades, onUpdateData }) {
                 // console.log('---------------------------');
 
                 let decades = new Set();
-                const dataEntries = results.data.map(entry => {
+                const dataEntries = results.data.map((entry: any) => {
                     return {
                         ...entry,
                         risk_factors: Object.keys(JSON.parse(entry.risk_factors)).join(',')

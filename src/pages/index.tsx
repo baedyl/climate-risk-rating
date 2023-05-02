@@ -37,23 +37,23 @@ const Home: NextPage = () => {
   const [dataEntries, setDataEntries] = useState([]);
   const [selectedDecade, setSelectedDecade] = React.useState('2030');
   const [selectedDecadeEntries, setSelectedDecadeEntries] = useState([]);
-  const [selectedDecadeEntriesPaginate, setSelectedDecadeEntriesPaginate] = useState([]);
+  // const [selectedDecadeEntriesPaginate, setSelectedDecadeEntriesPaginate] = useState([]);
   const [tooltipInfo, setTooltipInfo] = useState(null);
 
-  const handleDecadeChange = (event) => {
+  const handleDecadeChange = (event: {target: any}) => {
     setSelectedDecadeValue(event.target.value)
   };
 
-  const setSelectedDecadeValue = (value) => {
+  const setSelectedDecadeValue = (value: string) => {
     // alert(value )
     const selectedEntries = dataEntries.filter(entry => entry['year'] === value)
 
     setSelectedDecade(value);
     setSelectedDecadeEntries(selectedEntries)
-    setSelectedDecadeEntriesPaginate(paginate(selectedEntries))
+    // setSelectedDecadeEntriesPaginate(paginate(selectedEntries))
   };
 
-  const saveDecades = (data) => {
+  const saveDecades = (data: any) => {
     const orderedDecadesArr = Array.from(data).sort()
     setDecades(orderedDecadesArr)
     // console.log('selectedDecadeEntries ---> ', selectedDecadeEntries);

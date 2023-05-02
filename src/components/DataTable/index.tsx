@@ -36,6 +36,18 @@ declare module '@tanstack/table-core' {
   }
 }
 
+interface TableProps {
+  data: any[];
+  columns: ColumnDef<any>[];
+  isFetching?: boolean;
+  skeletonCount?: number;
+  skeletonHeight?: number;
+  pageCount?: number;
+  page?: (page: number) => void;
+  search?: (search: string) => void;
+  searchLabel?: string;
+}
+
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   // Rank the item
   const itemRank = rankItem(row.getValue(columnId), value)
@@ -49,10 +61,27 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed
 }
 
+const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
+  let dir = 0
+
+  // Only sort by rank if the column has ranking information
+  if (rowA.columnFiltersMeta[columnId]) {
+    dir = compareItems(
+      rowA.columnFiltersMeta[columnId]?.itemRank!,
+      rowB.columnFiltersMeta[columnId]?.itemRank!
+    )
+  }
+
+  // Provide an alphanumeric fallback for when the item ranks are equal
+  return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir
+}
+
 const DataTable = ({
   data,
   columns,
 }) => {
+  const rerender = React.useReducer(() => ({}), {})[1]
+
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
@@ -84,12 +113,12 @@ const DataTable = ({
   })
 
   React.useEffect(() => {
-    if (table?.getState()?.columnFilters[0]?.id === 'fullName') {
+    if (table.getState().columnFilters[0]?.id === 'fullName') {
       if (table.getState().sorting[0]?.id !== 'fullName') {
         table.setSorting([{ id: 'fullName', desc: false }])
       }
     }
-  }, [table])
+  }, [table.getState().columnFilters[0]?.id])
 
   return (
     <div className="p-2">
@@ -252,8 +281,11 @@ function Filter({
           return Array.from(uniqueValues).sort()
         }
       }
+      // return typeof firstValue === 'number'
+      //   ? []
+      //   : Array.from(column.getFacetedUniqueValues().keys()).sort()
     },
-    [column, firstValue]
+    [column.getFacetedUniqueValues()]
   )
 
   return typeof firstValue === 'number' ? (
@@ -337,7 +369,7 @@ function DebouncedInput({
     }, debounce)
 
     return () => clearTimeout(timeout)
-  }, [debounce, onChange, value])
+  }, [value])
 
   return (
     <input {...props} value={value} onChange={e => setValue(e.target.value)} />
