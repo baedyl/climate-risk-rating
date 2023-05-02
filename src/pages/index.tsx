@@ -28,19 +28,27 @@ const options = {
   },
 }
 
+interface dataEntry {
+  lat: string;
+  long: string;
+  risk_rating: number;
+  asset_name: string;
+  business_category: string;
+}
+
 const Home: NextPage = () => {
   const [currentPage, setCurrentPage] = useState<number | undefined>(1);
   const [search, setSearch] = useState<string | undefined>("");
 
-  const [decades, setDecades] = useState([]);
+  const [decades, setDecades] = useState<any>();
   const [isFetching, setIsFetching] = useState(false);
   const [dataEntries, setDataEntries] = useState([]);
   const [selectedDecade, setSelectedDecade] = React.useState('2030');
   const [selectedDecadeEntries, setSelectedDecadeEntries] = useState([]);
   // const [selectedDecadeEntriesPaginate, setSelectedDecadeEntriesPaginate] = useState([]);
-  const [tooltipInfo, setTooltipInfo] = useState(null);
+  const [tooltipInfo, setTooltipInfo] = useState<dataEntry | null>();
 
-  const handleDecadeChange = (event: {target: any}) => {
+  const handleDecadeChange = (event: { target: any }) => {
     setSelectedDecadeValue(event.target.value)
   };
 
@@ -60,7 +68,7 @@ const Home: NextPage = () => {
     setIsFetching(false)
   };
 
-  const saveData = (data) => {
+  const saveData = (data: any) => {
     setDataEntries(data)
   };
 
@@ -76,8 +84,8 @@ const Home: NextPage = () => {
 
   const chartData = useMemo(() => {
     if (tooltipInfo) {
-      const riskRatingValues = selectedDecadeEntries.map((entry) => {
-        if (entry.lat === tooltipInfo.lat && entry.lon === tooltipInfo.lon) {
+      const riskRatingValues = selectedDecadeEntries.map((entry: dataEntry) => {
+        if (entry.lat === tooltipInfo.lat && entry.long === tooltipInfo.long) {
           return entry.risk_rating
         }
         return null
@@ -113,7 +121,7 @@ const Home: NextPage = () => {
     console.log({ cell, row });
   };
 
-  const paginate = (items, page = 1, perPage = 10) => {
+  const paginate = (items: any, page = 1, perPage = 10) => {
     const offset = perPage * (page - 1);
     const totalPages = Math.ceil(items.length / perPage);
     const paginatedItems = items.slice(offset, perPage * page);
@@ -128,10 +136,10 @@ const Home: NextPage = () => {
   };
 
   const Header = (
-    <div display="flex" justifyContent="space-between">
-      <span variant="h4" alignItems="center">
+    <div className="flex space-between">
+      <h4>
         Climate Risk Data
-      </span>
+      </h4>
     </div>
   );
 
@@ -147,7 +155,7 @@ const Home: NextPage = () => {
               <ReadRemoteFile onUpdateData={saveData} onUpdateDecades={saveDecades} />
             </div>
             <Dropdown
-              options={decades.map((elem) => { return { value: elem, label: elem } })}
+              options={decades.map((elem: any) => { return { value: elem, label: elem } })}
               label={'Select Decade'}
               value={selectedDecade}
               onChange={handleDecadeChange}
@@ -197,13 +205,13 @@ const Home: NextPage = () => {
             <DataTable
               data={selectedDecadeEntries}
               columns={columns}
-              isFetching={false}
-              headerComponent={Header}
-              onClickRow={onClickRow}
+              // isFetching={false}
+              // headerComponent={Header}
+              // onClickRow={onClickRow}
               // pageCount={selectedDecadeEntriesPaginate.totalPages}
               // page={setCurrentPage}
-              search={setSearch}
-              searchLabel="Search by name"
+              // search={setSearch}
+              // searchLabel="Search by name"
             />
           )}
         </div>

@@ -76,10 +76,15 @@ const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir
 }
 
+interface dataTableProps {
+  data: any;
+  columns: any;
+}
+
 const DataTable = ({
   data,
   columns,
-}) => {
+}: dataTableProps) => {
   const rerender = React.useReducer(() => ({}), {})[1]
 
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -274,7 +279,7 @@ function Filter({
           return Array.from(uniqueValues).sort()
         } else {
           Array.from(column.getFacetedUniqueValues().keys()).map(value => {
-            value.split(',').map(elem => {
+            value.split(',').map((elem: string) => {
               uniqueValues.add(elem)
             })
           })
