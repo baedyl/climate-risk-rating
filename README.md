@@ -1,12 +1,10 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Set up Mapbox API key
+Set Mapbox API key in `local.env` file in root directory:
+
 ```
-
-Set Mapbox API key in `local.env` file in route directory:
-
     NEXT_PUBLIC_MAPBOX_TOKEN=
-
 ```
 
 ## Getting Started
@@ -34,10 +32,11 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 Tutorials, Stackoverflow Q&As, and any other references:
 
 - [TailwindCSS Documentation](https://tailwindcss.com/docs/installation) - learn about TailwindCSS.
-- [React-Table Component](https://dev.to/serhatgenc/creating-a-reusable-table-component-with-react-table-and-material-ui-10jd) - Creating a reusable table component with React-Table.
-- [Paginate an array](https://ilikekillnerds.com/2020/09/how-to-paginate-an-array-in-javascript/) - How to paginate an array in JavaScript.
+- [TailwindCSS Next troubleshoot](https://stackoverflow.com/questions/64032166/tailwindcss-not-working-with-next-js-what-is-wrong-with-the-configuration) - TailwindCSS Next config .
 - [React Papaparse Documentation](https://react-papaparse.js.org/docs) - React CSV parser.
 - [React-Map-Gl](https://visgl.github.io/react-map-gl/docs) - React wrapper for Mapbox GL JS.
+- [React-Table Component](https://dev.to/serhatgenc/creating-a-reusable-table-component-with-react-table-and-material-ui-10jd) - Creating a reusable table component with React-Table.
+- [Paginate an array](https://ilikekillnerds.com/2020/09/how-to-paginate-an-array-in-javascript/) - How to paginate an array in JavaScript.
 
 ## Deploy on Vercel
 

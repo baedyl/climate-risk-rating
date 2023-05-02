@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { usePapaParse } from 'react-papaparse';
 import { Loader } from './Loader';
 
-export default function ReadRemoteFile(props) {
-    const { onUpdateDecades, onUpdateData } = props
+export default function ReadRemoteFile({ onUpdateDecades, onUpdateData }) {
     const [isFetching, setIsFetching] = useState(false);
     const { readRemoteFile } = usePapaParse();
 

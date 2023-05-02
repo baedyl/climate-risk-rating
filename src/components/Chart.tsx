@@ -21,8 +21,6 @@ ChartJS.register(
     Legend
 );
 
-export default function Chart(props) {  
-    const {data, options} = props
-    
+export default function Chart({data, options}) {      
     return <Line options={options} data={data} />;
 }
