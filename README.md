@@ -1,5 +1,14 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Set up Mapbox API key
+```
+
+Set Mapbox API key in `local.env` file in route directory:
+
+    NEXT_PUBLIC_MAPBOX_TOKEN=
+
+```
+
 ## Getting Started
 
 First, run the development server:
@@ -20,14 +29,15 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Useful Resources
 
-To learn more about Next.js, take a look at the following resources:
+Tutorials, Stackoverflow Q&As, and any other references:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- [TailwindCSS Documentation](https://tailwindcss.com/docs/installation) - learn about TailwindCSS.
+- [React-Table Component](https://dev.to/serhatgenc/creating-a-reusable-table-component-with-react-table-and-material-ui-10jd) - Creating a reusable table component with React-Table.
+- [Paginate an array](https://ilikekillnerds.com/2020/09/how-to-paginate-an-array-in-javascript/) - How to paginate an array in JavaScript.
+- [React Papaparse Documentation](https://react-papaparse.js.org/docs) - React CSV parser.
+- [React-Map-Gl](https://visgl.github.io/react-map-gl/docs) - React wrapper for Mapbox GL JS.
 
 ## Deploy on Vercel
 

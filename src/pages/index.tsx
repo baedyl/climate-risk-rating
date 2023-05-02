@@ -139,10 +139,10 @@ const Home: NextPage = () => {
     <>
       {isFetching ? <Loader /> :
         <div className="w-full">
-          <h1 className="text-3xl font-bold mb-4">
+          <h1 className="text-3xl font-bold mx-2 mb-4">
             Climate Risk Rating Dataset
           </h1>
-          <div className="md:flex md:items-center mb-6">
+          <div className="md:flex md:items-center mx-2 mb-6">
             <div className="md:flex md:items-center">
               <ReadRemoteFile onUpdateData={saveData} onUpdateDecades={saveDecades} />
             </div>
@@ -153,7 +153,7 @@ const Home: NextPage = () => {
               onChange={handleDecadeChange}
             />
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:grid-cols-1">
+          <div className="grid mx-2 md:grid-cols-2 gap-4 sm:grid-cols-1">
             <div className="w-full">
               <Map
                 initialViewState={{
@@ -166,7 +166,7 @@ const Home: NextPage = () => {
                 // style={{ width: '100%', borderRadius: 10 }}
                 // mapStyle="mapbox://styles/mapbox/navigation-day-v1"
                 mapStyle="mapbox://styles/mapbox/streets-v9"
-                mapboxAccessToken={'pk.eyJ1Ijoidm9tZXNhIiwiYSI6ImNsZ3dkeGs0djBmMzAzanBmdHZyODlqZXkifQ.1mOyV59ri2G0Hl0OCV2Wkg'}
+                mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
               >
                 {markers}
 

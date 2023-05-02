@@ -36,18 +36,6 @@ declare module '@tanstack/table-core' {
   }
 }
 
-interface TableProps {
-  data: any[];
-  columns: ColumnDef<any>[];
-  isFetching?: boolean;
-  skeletonCount?: number;
-  skeletonHeight?: number;
-  pageCount?: number;
-  page?: (page: number) => void;
-  search?: (search: string) => void;
-  searchLabel?: string;
-}
-
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   // Rank the item
   const itemRank = rankItem(row.getValue(columnId), value)
@@ -61,27 +49,10 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed
 }
 
-const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
-  let dir = 0
-
-  // Only sort by rank if the column has ranking information
-  if (rowA.columnFiltersMeta[columnId]) {
-    dir = compareItems(
-      rowA.columnFiltersMeta[columnId]?.itemRank!,
-      rowB.columnFiltersMeta[columnId]?.itemRank!
-    )
-  }
-
-  // Provide an alphanumeric fallback for when the item ranks are equal
-  return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir
-}
-
 const DataTable = ({
   data,
   columns,
 }) => {
-  const rerender = React.useReducer(() => ({}), {})[1]
-
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
@@ -113,12 +84,12 @@ const DataTable = ({
   })
 
   React.useEffect(() => {
-    if (table.getState().columnFilters[0]?.id === 'fullName') {
+    if (table?.getState()?.columnFilters[0]?.id === 'fullName') {
       if (table.getState().sorting[0]?.id !== 'fullName') {
         table.setSorting([{ id: 'fullName', desc: false }])
       }
     }
-  }, [table.getState().columnFilters[0]?.id])
+  }, [table])
 
   return (
     <div className="p-2">
@@ -176,7 +147,7 @@ const DataTable = ({
               <tr key={row.id} className="odd:bg-white even:bg-slate-50">
                 {row.getVisibleCells().map(cell => {
                   return (
-                    <td key={cell.id} className="py-2">
+                    <td key={cell.id} className="py-2 px-2">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -281,11 +252,8 @@ function Filter({
           return Array.from(uniqueValues).sort()
         }
       }
-      // return typeof firstValue === 'number'
-      //   ? []
-      //   : Array.from(column.getFacetedUniqueValues().keys()).sort()
     },
-    [column.getFacetedUniqueValues()]
+    [column, firstValue]
   )
 
   return typeof firstValue === 'number' ? (
@@ -369,7 +337,7 @@ function DebouncedInput({
     }, debounce)
 
     return () => clearTimeout(timeout)
-  }, [value])
+  }, [debounce, onChange, value])
 
   return (
     <input {...props} value={value} onChange={e => setValue(e.target.value)} />
