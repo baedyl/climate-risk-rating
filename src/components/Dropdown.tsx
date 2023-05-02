@@ -21,7 +21,7 @@ export const Dropdown = ({ label, value, options, onChange }: dropdownProps) => 
             </label>
             <div className="relative">
                 <select className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-16 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" value={value} onChange={onChange}>
-                    {options.map((option: {label: string, value:string}, index:number) => (
+                    {options?.map((option: {label: string, value:string}, index:number) => (
                         <option value={option.value} key={index}>{option.label}</option>
                     ))}
                 </select>

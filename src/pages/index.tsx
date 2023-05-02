@@ -155,7 +155,7 @@ const Home: NextPage = () => {
               <ReadRemoteFile onUpdateData={saveData} onUpdateDecades={saveDecades} />
             </div>
             <Dropdown
-              options={decades.map((elem: any) => { return { value: elem, label: elem } })}
+              options={decades?.map((elem: any) => { return { value: elem, label: elem } })}
               label={'Select Decade'}
               value={selectedDecade}
               onChange={handleDecadeChange}
