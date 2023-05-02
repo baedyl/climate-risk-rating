@@ -41,7 +41,7 @@ const Home: NextPage = () => {
   const [search, setSearch] = useState<string | undefined>("");
 
   const [decades, setDecades] = useState<any>();
-  const [isFetching, setIsFetching] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [dataEntries, setDataEntries] = useState([]);
   const [selectedDecade, setSelectedDecade] = React.useState('2030');
   const [selectedDecadeEntries, setSelectedDecadeEntries] = useState([]);
@@ -49,23 +49,23 @@ const Home: NextPage = () => {
   const [tooltipInfo, setTooltipInfo] = useState<dataEntry | null>();
 
   const handleDecadeChange = (event: { target: any }) => {
+    setIsLoading(true)
     setSelectedDecadeValue(event.target.value)
   };
 
   const setSelectedDecadeValue = (value: string) => {
-    // alert(value )
     const selectedEntries = dataEntries.filter(entry => entry['year'] === value)
 
     setSelectedDecade(value);
     setSelectedDecadeEntries(selectedEntries)
-    // setSelectedDecadeEntriesPaginate(paginate(selectedEntries))
+    setIsLoading(false)
   };
 
   const saveDecades = (data: any) => {
     const orderedDecadesArr = Array.from(data).sort()
     setDecades(orderedDecadesArr)
     // console.log('selectedDecadeEntries ---> ', selectedDecadeEntries);
-    setIsFetching(false)
+    setIsLoading(false)
   };
 
   const saveData = (data: any) => {
@@ -121,48 +121,48 @@ const Home: NextPage = () => {
     console.log({ cell, row });
   };
 
-  const paginate = (items: any, page = 1, perPage = 10) => {
-    const offset = perPage * (page - 1);
-    const totalPages = Math.ceil(items.length / perPage);
-    const paginatedItems = items.slice(offset, perPage * page);
+  // const paginate = (items: any, page = 1, perPage = 10) => {
+  //   const offset = perPage * (page - 1);
+  //   const totalPages = Math.ceil(items.length / perPage);
+  //   const paginatedItems = items.slice(offset, perPage * page);
 
-    return {
-      previousPage: page - 1 ? page - 1 : null,
-      nextPage: (totalPages > page) ? page + 1 : null,
-      total: items.length,
-      totalPages: totalPages,
-      items: paginatedItems
-    };
-  };
+  //   return {
+  //     previousPage: page - 1 ? page - 1 : null,
+  //     nextPage: (totalPages > page) ? page + 1 : null,
+  //     total: items.length,
+  //     totalPages: totalPages,
+  //     items: paginatedItems
+  //   };
+  // };
 
-  const Header = (
-    <div className="flex space-between">
-      <h4>
-        Climate Risk Data
-      </h4>
-    </div>
-  );
+  // const Header = (
+  //   <div className="flex space-between">
+  //     <h4>
+  //       Climate Risk Data
+  //     </h4>
+  //   </div>
+  // );
 
   return (
-    <>
-      {isFetching ? <Loader /> :
-        <div className="w-full">
-          <h1 className="text-3xl font-bold mx-2 mb-4">
-            Climate Risk Rating Dataset
-          </h1>
-          <div className="md:flex md:items-center mx-2 mb-6">
-            <div className="md:flex md:items-center">
-              <ReadRemoteFile onUpdateData={saveData} onUpdateDecades={saveDecades} />
-            </div>
-            <Dropdown
-              options={decades?.map((elem: any) => { return { value: elem, label: elem } })}
-              label={'Select Decade'}
-              value={selectedDecade}
-              onChange={handleDecadeChange}
-            />
-          </div>
-          <div className="grid mx-2 md:grid-cols-2 gap-4 sm:grid-cols-1">
-            <div className="w-full">
+    <div className="w-full">
+      <h1 className="text-3xl font-bold mx-2 mb-4 p-5 md:text-4xl">
+        Climate Risk Rating Dataset
+      </h1>
+      <div className="md:flex md:items-center mx-2 mb-6 md:p-4 sm:p-0">
+        <div className="md:flex md:items-center">
+          <ReadRemoteFile onUpdateData={saveData} onUpdateDecades={saveDecades} />
+        </div>
+        <Dropdown
+          options={decades?.map((elem: any) => { return { value: elem, label: elem } })}
+          label={'Select Decade'}
+          value={selectedDecade}
+          onChange={handleDecadeChange}
+        />
+      </div>
+      <div className="bg-white my-5 w-full flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
+        <main className="bg-sky-300 md:w-1/2 lg:w-3/4 md:p-4 h-400 sm:p-0">
+          <>
+            {isLoading ? <Loader /> :
               <Map
                 initialViewState={{
                   longitude: -80.38297,
@@ -192,31 +192,29 @@ const Home: NextPage = () => {
                   </Popup>
                 )}
               </Map>
-            </div>
-
-            <div className="w-full">
-              <Chart data={chartData} options={options} />
-            </div>
-          </div>
-
-
-          {/* {isError && <Alert severity="error">{error?.message}</Alert>} */}
-          {selectedDecadeEntries && (
-            <DataTable
-              data={selectedDecadeEntries}
-              columns={columns}
-              // isFetching={false}
-              // headerComponent={Header}
-              // onClickRow={onClickRow}
-              // pageCount={selectedDecadeEntriesPaginate.totalPages}
-              // page={setCurrentPage}
-              // search={setSearch}
-              // searchLabel="Search by name"
-            />
-          )}
-        </div>
-      }
-    </>
+            }
+          </>
+        </main>
+        {/* <div className="bg-sky-300 sm:w-full md:w-1/2 px-5 py-2">
+              </div> */}
+        <aside className="bg-green-100 md:w-1/2 md:p-4 sm:p-0">
+          <Chart data={chartData} options={options} />
+        </aside>
+      </div>
+      {selectedDecadeEntries && (
+        <DataTable
+          data={selectedDecadeEntries}
+          columns={columns}
+        // isLoading={false}
+        // headerComponent={Header}
+        // onClickRow={onClickRow}
+        // pageCount={selectedDecadeEntriesPaginate.totalPages}
+        // page={setCurrentPage}
+        // search={setSearch}
+        // searchLabel="Search by name"
+        />
+      )}
+    </div>
   );
 };
 

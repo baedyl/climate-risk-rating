@@ -126,20 +126,20 @@ const DataTable = ({
   }, [table.getState().columnFilters[0]?.id])
 
   return (
-    <div className="p-2">
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg px-4">
       <div>
         <DebouncedInput
           value={globalFilter ?? ''}
           onChange={value => setGlobalFilter(String(value))}
-          className="p-2 font-lg shadow border border-block"
+          className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Search all columns..."
         />
       </div>
       <div className="h-2" />
-      <table className="table-auto border-collapse">
-        <thead>
+      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           {table.getHeaderGroups().map(headerGroup => (
-            <tr key={headerGroup.id}>
+            <tr key={headerGroup.id} className="px-6 py-3">
               {headerGroup.headers.map(header => {
                 return (
                   <th key={header.id} colSpan={header.colSpan}>
@@ -178,10 +178,10 @@ const DataTable = ({
         <tbody>
           {table.getRowModel().rows.map(row => {
             return (
-              <tr key={row.id} className="odd:bg-white even:bg-slate-50">
+              <tr key={row.id} className="odd:bg-white even:bg-slate-100 bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 {row.getVisibleCells().map(cell => {
                   return (
-                    <td key={cell.id} className="py-2 px-2">
+                    <td key={cell.id} className="px-4 py-3 text-gray-900 first:rounded-t-lg last:rounded-b-lg sm:first:rounded-t-none sm:last:rounded-b-none sm:first:rounded-tl-lg sm:first:rounded-bl-lg sm:last:rounded-tr-lg sm:last:rounded-br-lg">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -189,6 +189,9 @@ const DataTable = ({
                     </td>
                   )
                 })}
+                <td className="px-6 py-4">
+                    <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a>
+                </td>
               </tr>
             )
           })}
@@ -377,7 +380,7 @@ function DebouncedInput({
   }, [value])
 
   return (
-    <input {...props} value={value} onChange={e => setValue(e.target.value)} />
+    <input className="" {...props} value={value} onChange={e => setValue(e.target.value)} />
   )
 }
 
