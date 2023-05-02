@@ -3,7 +3,7 @@ import React, { useState, useMemo, useEffect } from 'react'
 import type { NextPage } from "next";
 import axios from "axios";
 import DataTable from '../components/DataTable';
-import { columns } from './colums';
+import { columns } from '../components/colums';
 import { useQuery } from "@tanstack/react-query";
 import ReadRemoteFile from '../components/RemoteCSVReader';
 import { Dropdown } from '../components/Dropdown';
