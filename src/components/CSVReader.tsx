@@ -88,6 +88,7 @@ export default function CSVReader(props) {
   );
 
   return (
+    // TO DO: FORMAT THE RESULT DATA 
     <CSVReader
       onUploadAccepted={(results: any) => {
         let decades = new Set();

@@ -131,7 +131,7 @@ const DataTable = ({
         />
       </div>
       <div className="h-2" />
-      <table>
+      <table className="table-auto border-collapse">
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
@@ -173,10 +173,10 @@ const DataTable = ({
         <tbody>
           {table.getRowModel().rows.map(row => {
             return (
-              <tr key={row.id}>
+              <tr key={row.id} className="odd:bg-white even:bg-slate-50">
                 {row.getVisibleCells().map(cell => {
                   return (
-                    <td key={cell.id}>
+                    <td key={cell.id} className="py-2">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -189,36 +189,25 @@ const DataTable = ({
           })}
         </tbody>
       </table>
-      <div className="h-2" />
-      <div className="flex items-center gap-2">
-        <button
-          className="border rounded p-1"
-          onClick={() => table.setPageIndex(0)}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {'<<'}
+      <div className="flex justify-center gap-2 mt-2">
+        <button onClick={() => table.setPageIndex(0)}
+          disabled={!table.getCanPreviousPage()} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+          First
         </button>
-        <button
-          className="border rounded p-1"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {'<'}
+        <button onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+          Prev
         </button>
-        <button
-          className="border rounded p-1"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          {'>'}
+
+        <button onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+          Next
         </button>
-        <button
-          className="border rounded p-1"
-          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-          disabled={!table.getCanNextPage()}
-        >
-          {'>>'}
+        <button onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+          disabled={!table.getCanNextPage()} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+          Last
         </button>
+
         <span className="flex items-center gap-1">
           <div>Page</div>
           <strong>
@@ -252,9 +241,9 @@ const DataTable = ({
         </select>
       </div>
       <div>{table.getPrePaginationRowModel().rows.length} Rows</div>
-      <div>
+      {/* <div>
         <button onClick={() => rerender()}>Force Rerender</button>
-      </div>
+      </div> */}
       {/* <pre>{JSON.stringify(table.getState(), null, 2)}</pre> */}
     </div>
   )
@@ -311,8 +300,8 @@ function Filter({
             column.setFilterValue((old: [number, number]) => [value, old?.[1]])
           }
           placeholder={`Min ${column.getFacetedMinMaxValues()?.[0]
-              ? `(${column.getFacetedMinMaxValues()?.[0]})`
-              : ''
+            ? `(${column.getFacetedMinMaxValues()?.[0]})`
+            : ''
             }`}
           className="w-24 border shadow rounded"
         />
@@ -325,8 +314,8 @@ function Filter({
             column.setFilterValue((old: [number, number]) => [old?.[0], value])
           }
           placeholder={`Max ${column.getFacetedMinMaxValues()?.[1]
-              ? `(${column.getFacetedMinMaxValues()?.[1]})`
-              : ''
+            ? `(${column.getFacetedMinMaxValues()?.[1]})`
+            : ''
             }`}
           className="w-24 border shadow rounded"
         />
