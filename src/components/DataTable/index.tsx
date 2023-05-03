@@ -26,6 +26,7 @@ import {
   rankItem,
   compareItems,
 } from '@tanstack/match-sorter-utils'
+import { Tag } from '../Tag'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -118,6 +119,8 @@ const DataTable = ({
   })
 
   React.useEffect(() => {
+    console.log(table.getRowModel().rows);
+
     if (table.getState().columnFilters[0]?.id === 'fullName') {
       if (table.getState().sorting[0]?.id !== 'fullName') {
         table.setSorting([{ id: 'fullName', desc: false }])
@@ -178,20 +181,31 @@ const DataTable = ({
         <tbody>
           {table.getRowModel().rows.map(row => {
             return (
-              <tr key={row.id} className="odd:bg-white even:bg-slate-100 bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <tr key={row.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 {row.getVisibleCells().map(cell => {
-                  return (
-                    <td key={cell.id} className="px-4 py-3 text-gray-900 first:rounded-t-lg last:rounded-b-lg sm:first:rounded-t-none sm:last:rounded-b-none sm:first:rounded-tl-lg sm:first:rounded-bl-lg sm:last:rounded-tr-lg sm:last:rounded-br-lg">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
-                  )
+                  const riskFactorsTags = Object.entries(cell.getContext()?.row?.original?.risks)?.map(([label, value]: any, index: number) => {
+                    return (<Tag key={index} label={label} value={value} />)
+                  })
+                  if (cell.getContext()?.column?.id == "risk_factors") {
+                    return (
+                      <td key={cell.id}>
+                        {riskFactorsTags}
+                      </td>
+                    )
+                  } else {
+                    return (
+                      <td key={cell.id} className="px-4 py-3 text-gray-900 first:rounded-t-lg last:rounded-b-lg sm:first:rounded-t-none sm:last:rounded-b-none sm:first:rounded-tl-lg sm:first:rounded-bl-lg sm:last:rounded-tr-lg sm:last:rounded-br-lg">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </td>
+                    )
+                  }
                 })}
-                <td className="px-6 py-4">
-                    <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a>
-                </td>
+                {/* <td className="px-6 py-4">
+                  <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a>
+                </td> */}
               </tr>
             )
           })}

@@ -29,6 +29,7 @@ export default function ReadRemoteFile({ onUpdateDecades, onUpdateData }: CSVRea
                 const dataEntries = results.data.map((entry: any) => {
                     return {
                         ...entry,
+                        risks: Object.fromEntries(Object.entries(JSON.parse(entry.risk_factors))),
                         risk_factors: Object.keys(JSON.parse(entry.risk_factors)).join(',')
                     }
                 })
