@@ -90,7 +90,7 @@ const Home: NextPage = () => {
         }
         return null
       }).filter(value => value !== null)
-      console.log(riskRatingValues);
+      // console.log(riskRatingValues);
 
       return {
         labels: decades,
@@ -117,9 +117,9 @@ const Home: NextPage = () => {
     }
   }, [decades, selectedDecadeEntries, tooltipInfo]);
 
-  const onClickRow = (cell: any, row: any) => {
-    console.log({ cell, row });
-  };
+  // const onClickRow = (cell: any, row: any) => {
+  //   console.log({ cell, row });
+  // };
 
   // const paginate = (items: any, page = 1, perPage = 10) => {
   //   const offset = perPage * (page - 1);

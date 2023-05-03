@@ -119,7 +119,7 @@ const DataTable = ({
   })
 
   React.useEffect(() => {
-    console.log(table.getRowModel().rows);
+    // console.log(table.getRowModel().rows);
 
     if (table.getState().columnFilters[0]?.id === 'fullName') {
       if (table.getState().sorting[0]?.id !== 'fullName') {
