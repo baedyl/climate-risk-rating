@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 Set Mapbox API key in `local.env` file in root directory:
 
 ```
-    NEXT_PUBLIC_MAPBOX_TOKEN=
+    REACT_APP_MAPBOX_TOKEN=
 ```
 
 ## Getting Started
